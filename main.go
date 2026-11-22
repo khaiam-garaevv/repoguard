@@ -3,49 +3,29 @@ package main
 import (
 	"fmt"
 	"os"
-	"path/filepath"
+
+	"github.com/khayyamgarayev/repoguard/internal/checker"
+	"github.com/khayyamgarayev/repoguard/internal/reporter"
+	"github.com/khayyamgarayev/repoguard/internal/scanner"
 )
 
 func main() {
-	target := "."
+	root := "."
 
 	if len(os.Args) > 1 {
-		target = os.Args[1]
+		root = os.Args[1]
 	}
 
-	requiredFiles := []string{
-		"README.md",
-		".gitignore",
-		"go.mod",
-	}
+	required := checker.RequiredFiles()
 
 	fmt.Println("RepoGuard - Repository Analyzer")
 	fmt.Println("--------------------------------")
 
-	missing := 0
+	missing := scanner.Scan(root, required)
 
-	for _, file := range requiredFiles {
-		path := filepath.Join(target, file)
+	reporter.Report(len(required), missing)
 
-		info, err := os.Stat(path)
-
-		if err == nil && !info.IsDir() {
-			fmt.Println("[OK] ", file)
-		} else if os.IsNotExist(err) {
-			fmt.Println("[FAIL]", file)
-			missing++
-		} else {
-			fmt.Println("[ERROR]", file)
-			missing++
-		}
-	}
-
-	fmt.Println("--------------------------------")
-	fmt.Printf("Total: %d\n", len(requiredFiles))
-	fmt.Printf("Passed: %d\n", len(requiredFiles)-missing)
-	fmt.Printf("Failed: %d\n", missing)
-
-	if missing > 0 {
+	if len(missing) > 0 {
 		os.Exit(1)
 	}
 }
