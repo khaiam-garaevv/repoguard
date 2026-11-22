@@ -20,7 +20,7 @@
 Clone the repository:
 
 ```bash
-git clone https://github.com/khayyamgarayev/repoguard.git
+git clone https://github.com/khaiam-garaevv/repoguard.git
 cd repoguard
 ```
 

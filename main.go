@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/khayyamgarayev/repoguard/internal/checker"
-	"github.com/khayyamgarayev/repoguard/internal/reporter"
-	"github.com/khayyamgarayev/repoguard/internal/scanner"
+	"github.com/khaiam-garaevv/repoguard/internal/checker"
+	"github.com/khaiam-garaevv/repoguard/internal/reporter"
+	"github.com/khaiam-garaevv/repoguard/internal/scanner"
 )
 
 func main() {
